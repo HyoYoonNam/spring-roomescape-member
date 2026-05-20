@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import roomescape.dto.ReservationRequestDTO;
-import roomescape.dto.ReservationResponseDTO;
+import roomescape.dto.ReservationRequestDto;
+import roomescape.dto.ReservationResponseDto;
 import roomescape.dto.ReservationUpdateDtoDateAndTimeIdOnly;
 import roomescape.service.ReservationService;
 
@@ -31,7 +31,7 @@ public class ReservationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ReservationResponseDTO>> readAllByUsername(
+    public ResponseEntity<List<ReservationResponseDto>> readAllByUsername(
             @RequestParam @NotBlank(message = "이름은 1글자 이상 입력되어야 합니다.") String username
     ) {
         return ResponseEntity
@@ -39,8 +39,8 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> add(@Valid @RequestBody ReservationRequestDTO request) {
-        ReservationResponseDTO saved = reservationService.reserve(request);
+    public ResponseEntity<Void> add(@Valid @RequestBody ReservationRequestDto request) {
+        ReservationResponseDto saved = reservationService.reserve(request);
         return ResponseEntity
                 .created(URI.create("/reservations/" + saved.id()))
                 .build();
@@ -58,7 +58,7 @@ public class ReservationController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> delete(@Valid @ModelAttribute ReservationRequestDTO request) {
+    public ResponseEntity<Void> delete(@Valid @ModelAttribute ReservationRequestDto request) {
         reservationService.cancelReservation(request);
         return ResponseEntity
                 .noContent()
